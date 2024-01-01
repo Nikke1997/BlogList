@@ -1,3 +1,27 @@
+const Blog = require('../models/blog')
+const User = require('../models/user')
+
+const listWithMultiBlog = [
+  {
+    title: 'Go To Statement Considered Harmful',
+    author: 'Edsger W. Dijkstra',
+    url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
+    likes: 5
+  },
+  {
+    title: 'Testi1',
+    author: 'Minä',
+    url: 'http://www.testi.fi/',
+    likes: 6
+  },
+  {
+    title: 'testi2',
+    author: 'Minä',
+    url: 'http://www.testi2.fi/',
+    likes: 7
+  }
+]
+
 const dummy = (blogs) => {
     return 1
   }
@@ -8,6 +32,7 @@ const dummy = (blogs) => {
     return blogs.reduce(reducer, 0)
   }
 
+  //Returns the blog with the most likes
   const favoriteBlog = (blogs) => { 
     const reducer = (favorite, blog) => {
       return (favorite.likes > blog.likes) ? favorite : blog
@@ -15,9 +40,11 @@ const dummy = (blogs) => {
     return blogs.reduce(reducer, 0)
   }
 
+  //Returns the author with the most blogs
   const mostBlogs = (blogs) => {
     const blogCounts = {}
   
+    //Count the number of blogs for each author
     blogs.forEach((blog) => {
       if (blog.author in blogCounts) {
         blogCounts[blog.author] += 1
@@ -34,6 +61,7 @@ const dummy = (blogs) => {
     }
   }
 
+  //Returns the author with the most likes
   const mostLikes = (blogs) => {
     const blogLikes = {}
   
@@ -51,6 +79,16 @@ const dummy = (blogs) => {
       author: mostLikesAuthor,
       likes: blogLikes[mostLikesAuthor]
     }}
+
+    const blogsInDb = async () => {
+      const blogs = await Blog.find({})
+      return blogs.map(blog => blog.toJSON())
+    }
+
+    const usersInDb = async () => {
+      const users = await User.find({})
+      return users.map(u => u.toJSON())
+    }
   
 
   module.exports = {
@@ -58,5 +96,8 @@ const dummy = (blogs) => {
     totalLikes,
     favoriteBlog,
     mostBlogs,
-    mostLikes
+    mostLikes,
+    listWithMultiBlog,
+    blogsInDb,
+    usersInDb
   }
