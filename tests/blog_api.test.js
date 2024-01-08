@@ -93,10 +93,11 @@ describe('Checking controller functions', () => {
   })
 
   //Check that a blog without title and url will return 400.
-  test('if title and url is missing, return 400', async () => {
+  test('if title and author is missing, return 400', async () => {
     const newBlog = {
-      author: 'testi',
-      likes: 6
+      likes: 6,
+      url: 'http://www.testi.fi/',
+      userId: '65994d9e53bc4b956e0df842'
     }
     await api.post('/api/blogs').send(newBlog).expect(400)
   }

@@ -14,13 +14,21 @@ usersRouter.post('/', async (request, response) => {
         passwordHash,
     })
 
+    if (username === undefined || password === undefined) {
+        return response.status(400).json({error: 'username or password is missing'})
+    }
+    else if (username.length < 3 || password.length < 3) {
+        return response.status(400).json({error: 'username or password is too short'})
+    }
+else {
     const savedUser = await user.save()
 
     response.status(201).json(savedUser)
+}
 })
 
 usersRouter.get('/', async (request, response) => {
-    const users = await User.find({})
+    const users = await User.find({}).populate('blogs')
     response.json(users)
 })
 
