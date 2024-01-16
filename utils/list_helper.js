@@ -22,15 +22,26 @@ const listWithMultiBlog = [
   }
 ]
 
+const usersBefore = [
+  {
+    username: 'testi2',
+    name: 'testi2',
+    password: 'testi2'
+  }
+]
+
 const dummy = (blogs) => {
     return 1
   }
+
+  //Returns the total number of likes for all blogs
   const totalLikes = (blogs) => {
     const reducer = (sum, item) => {
       return sum + item.likes
     }
     return blogs.reduce(reducer, 0)
   }
+
 
   //Returns the blog with the most likes
   const favoriteBlog = (blogs) => { 
@@ -89,6 +100,8 @@ const dummy = (blogs) => {
       const users = await User.find({})
       return users.map(u => u.toJSON())
     }
+
+
   
 
   module.exports = {
@@ -99,5 +112,6 @@ const dummy = (blogs) => {
     mostLikes,
     listWithMultiBlog,
     blogsInDb,
-    usersInDb
+    usersInDb,
+    usersBefore
   }

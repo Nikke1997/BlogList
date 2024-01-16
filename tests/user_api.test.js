@@ -8,7 +8,9 @@ const mongoose = require('mongoose')
 const api = supertest(app)
 
 
+
 describe('when there is initially one user at db', () => {
+    //initialize the database with one user
     beforeEach(async () => {
         await User.deleteMany({})
 
@@ -18,6 +20,7 @@ describe('when there is initially one user at db', () => {
         await user.save()
     })
 
+    //Check that the you can create a new user
     test('creation succeeds with a fresh username', async () => {
         const usersAtStart = await helper.usersInDb()
 
@@ -40,6 +43,7 @@ describe('when there is initially one user at db', () => {
         expect(usernames).toContain(newUser.username)
     })
 
+    //Check that you can't create a new user with a username that already exists
     test('creation fails with a taken username', async () => {
         const usersAtStart = await helper.usersInDb()
 
@@ -61,6 +65,7 @@ describe('when there is initially one user at db', () => {
         expect(usersAtEnd).toHaveLength(usersAtStart.length)
     })
 
+    // Check that you can't create a new user with a username or password that is too short
     test('creation fails with too short username', async () => {
         const usersAtStart = await helper.usersInDb()
 
@@ -81,6 +86,7 @@ describe('when there is initially one user at db', () => {
         expect(usersAtEnd).toHaveLength(usersAtStart.length)
     })
 
+    // Check that you can't create a new user with a username or password that is missing
     test('creation fails with missing username', async () => {
         const newUser = {
             name: 'Superuser',
